@@ -5,15 +5,23 @@ type FormValues = {
   username: string;
   email: string;
   channel: string;
+  social: {
+    twitter: string;
+    facebook: string;
+  };
 };
 
 export default function YoutubeForm() {
   const form = useForm<FormValues>({
-    defaultValues:  {
-        username: "Batman",
-        email: "",
-        channel: ""
-    }
+    defaultValues: {
+      username: 'Batman',
+      email: '',
+      channel: '',
+      social: {
+        twitter: '',
+        facebook: '',
+      },
+    },
   });
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
@@ -59,8 +67,8 @@ export default function YoutubeForm() {
                   return fieldValue !== 'admin@example.com' || 'Enter a different address';
                 },
                 notBlackListed: (fieldValue) => {
-                    return !fieldValue.endsWith("baddomain.com") || "This domain is not supported "
-                }
+                  return !fieldValue.endsWith('baddomain.com') || 'This domain is not supported ';
+                },
               },
             })}
           />
@@ -80,6 +88,16 @@ export default function YoutubeForm() {
             })}
           />
           <p className='error'>{errors.channel?.message}</p>
+        </div>
+
+        <div className='form-control'>
+          <label htmlFor='twitter'>Twitter</label>
+          <input type='text' id='twitter' {...register('social.twitter')} />
+        </div>
+
+        <div className='form-control'>
+          <label htmlFor='facebook'>Facebook</label>
+          <input type='text' id='twitter' {...register('social.facebook')} />
         </div>
 
         <button>Submit</button>
