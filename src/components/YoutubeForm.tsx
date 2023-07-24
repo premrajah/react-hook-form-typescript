@@ -1,13 +1,24 @@
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
+type FormValues = {
+    username: string,
+    email: string,
+    channel: string
+}
+
 export default function YoutubeForm() {
-  const form = useForm();
-  const { register, control } = form;
+  const form = useForm<FormValues>();
+  const { register, control, handleSubmit } = form;
+
+  const onSubmitHandler = (data: FormValues) => {
+    console.log("form submitted ", data);
+    
+  }
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit(onSubmitHandler)}>
         <label htmlFor='username'>Username</label>
         <input type='text' id='username' {...register('username')} />
         <label htmlFor='email'>Email</label>
