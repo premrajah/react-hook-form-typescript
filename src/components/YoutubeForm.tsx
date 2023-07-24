@@ -8,7 +8,18 @@ type FormValues = {
 };
 
 export default function YoutubeForm() {
-  const form = useForm<FormValues>();
+  const form = useForm<FormValues>({
+    defaultValues: async () => {
+      const response = await fetch('https://jsonplaceholder.typicode.com/users/1');
+      const data = await response.json();
+
+      return {
+        username: "Batman",
+        email: data.email,
+        channel: ""
+      }
+    },
+  });
   const { register, control, handleSubmit, formState } = form;
   const { errors } = formState;
 
@@ -53,8 +64,8 @@ export default function YoutubeForm() {
                   return fieldValue !== 'admin@example.com' || 'Enter a different address';
                 },
                 notBlackListed: (fieldValue) => {
-                    return !fieldValue.endsWith("baddomain.com") || "This domain is not supported "
-                }
+                  return !fieldValue.endsWith('baddomain.com') || 'This domain is not supported ';
+                },
               },
             })}
           />
