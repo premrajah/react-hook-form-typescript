@@ -19,9 +19,6 @@ type FormValues = {
 };
 
 export default function YoutubeForm() {
-
-   
-
   const form = useForm<FormValues>({
     defaultValues: {
       username: 'Batman',
@@ -41,7 +38,7 @@ export default function YoutubeForm() {
       dob: new Date(),
     },
   });
-  const { register, control, handleSubmit, formState, watch } = form;
+  const { register, control, handleSubmit, formState, watch, getValues } = form;
   const { errors } = formState;
 
   const { fields, append, remove } = useFieldArray({
@@ -49,28 +46,33 @@ export default function YoutubeForm() {
     control,
   });
 
-//   const watchForm = watch();
+  //   const watchForm = watch();
 
-useEffect(() => {
-    const subscription = watch((value) => {
-        console.log("watched values: ", value);
-    });
+  // useEffect(() => {
+  //     const subscription = watch((value) => {
+  //         console.log("watched values: ", value);
+  //     });
 
-    // cleanup
-    return () => {
-        subscription.unsubscribe();
-    }
-}, [watch])
+  //     // cleanup
+  //     return () => {
+  //         subscription.unsubscribe();
+  //     }
+  // }, [watch])
 
-  const onSubmitHandler = (data: FormValues) => {
+  const handleOnSubmit = (data: FormValues) => {
     console.log('form submitted ', data);
+  };
+
+  const handleGetFormValues = () => {
+    console.log('Get Values ', getValues());
+    // console.log('Get Values ', getValues(['social', 'email']));
   };
 
   return (
     <div>
       {/* <h2>Watched Values {JSON.stringify(watchForm)}</h2> */}
 
-      <form onSubmit={handleSubmit(onSubmitHandler)} noValidate>
+      <form onSubmit={handleSubmit(handleOnSubmit)} noValidate>
         <div className='form-control'>
           <label htmlFor='username'>Username</label>
           <input
@@ -199,10 +201,17 @@ useEffect(() => {
           <p className='error'>{errors.dob?.message}</p>
         </div>
 
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <button>Submit</button>
         </div>
+
+        <div>
+          <button type='button' onClick={handleGetFormValues}>
+            Get Values
+          </button>
+        </div>
       </form>
+      {/* end form */}
       <DevTool control={control} />
     </div>
   );
