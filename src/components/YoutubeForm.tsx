@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import { useEffect } from 'react';
 
@@ -79,11 +79,16 @@ export default function YoutubeForm() {
     });
   };
 
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("Form errors ", errors);
+    
+  }
+
   return (
     <div>
       {/* <h2>Watched Values {JSON.stringify(watchForm)}</h2> */}
 
-      <form onSubmit={handleSubmit(handleOnSubmit)} noValidate>
+      <form onSubmit={handleSubmit(handleOnSubmit, onError)} noValidate>
         <div className='form-control'>
           <label htmlFor='username'>Username</label>
           <input
