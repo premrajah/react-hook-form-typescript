@@ -2,17 +2,18 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
 type FormValues = {
-  username: string;
-  email: string;
-  channel: string;
+  username: string,
+  email: string,
+  channel: string,
   social: {
-    twitter: string;
-    facebook: string;
-  };
-  phoneNumbers: string[];
+    twitter: string,
+    facebook: string,
+  },
+  phoneNumbers: string[],
   phNumbers: {
-    number: string;
-  }[];
+    number: string,
+  }[],
+  age: number,
 };
 
 export default function YoutubeForm() {
