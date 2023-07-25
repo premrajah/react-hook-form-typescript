@@ -38,7 +38,7 @@ export default function YoutubeForm() {
       dob: new Date(),
     },
   });
-  const { register, control, handleSubmit, formState, watch, getValues } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
   const { errors } = formState;
 
   const { fields, append, remove } = useFieldArray({
@@ -66,6 +66,14 @@ export default function YoutubeForm() {
   const handleGetFormValues = () => {
     console.log('Get Values ', getValues());
     // console.log('Get Values ', getValues(['social', 'email']));
+  };
+
+  const handleSetValue = () => {
+    setValue('username', '', {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+    });
   };
 
   return (
@@ -206,10 +214,14 @@ export default function YoutubeForm() {
         </div>
 
         <div>
-          <button type='button' onClick={handleGetFormValues}>
+          <button style={{marginRight: "10px"}} type='button' onClick={handleGetFormValues}>
             Get Values
           </button>
+          <button type='button' onClick={handleSetValue}>
+            Set Value
+          </button>
         </div>
+
       </form>
       {/* end form */}
       <DevTool control={control} />
