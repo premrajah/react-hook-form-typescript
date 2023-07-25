@@ -39,10 +39,10 @@ export default function YoutubeForm() {
     },
   });
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
-  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
 
-//   console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
-  
+  //   console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
+  console.log('is from valid ', isValid);
 
   const { fields, append, remove } = useFieldArray({
     name: 'phNumbers',
@@ -73,19 +73,18 @@ export default function YoutubeForm() {
 
   const handleSetValue = () => {
     setValue('username', '', {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
     });
   };
 
   const onError = (errors: FieldErrors<FormValues>) => {
-    console.log("Form errors ", errors);
-    
-  }
+    console.log('Form errors ', errors);
+  };
 
   return (
-    <div>
+    <div className='formContainer'>
       {/* <h2>Watched Values {JSON.stringify(watchForm)}</h2> */}
 
       <form onSubmit={handleSubmit(handleOnSubmit, onError)} noValidate>
@@ -148,12 +147,16 @@ export default function YoutubeForm() {
 
         <div className='form-control'>
           <label htmlFor='twitter'>Twitter</label>
-          <input type='text' id='twitter' {...register('social.twitter', {
-            // disabled: true,
-            disabled: watch("channel") === "",
-            // will be undefined when disabled and required will be turned off
-            required: "Twitter is required",
-          })} />
+          <input
+            type='text'
+            id='twitter'
+            {...register('social.twitter', {
+              // disabled: true,
+              disabled: watch('channel') === '',
+              // will be undefined when disabled and required will be turned off
+              required: 'Twitter is required',
+            })}
+          />
           <p className='error'>{errors.social?.twitter?.message}</p>
         </div>
 
@@ -224,18 +227,17 @@ export default function YoutubeForm() {
         </div>
 
         <div style={{ marginBottom: '10px' }}>
-          <button>Submit</button>
+          <button disabled={!isDirty || !isValid}>Submit</button>
         </div>
 
         <div>
-          <button style={{marginRight: "10px"}} type='button' onClick={handleGetFormValues}>
+          <button style={{ marginRight: '10px' }} type='button' onClick={handleGetFormValues}>
             Get Values
           </button>
           <button type='button' onClick={handleSetValue}>
             Set Value
           </button>
         </div>
-
       </form>
       {/* end form */}
       <DevTool control={control} />
