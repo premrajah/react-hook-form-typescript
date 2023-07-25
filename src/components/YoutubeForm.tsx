@@ -39,7 +39,10 @@ export default function YoutubeForm() {
     },
   });
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
-  const { errors } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty } = formState;
+
+  console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
+  
 
   const { fields, append, remove } = useFieldArray({
     name: 'phNumbers',
