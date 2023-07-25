@@ -41,7 +41,7 @@ export default function YoutubeForm() {
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
   const { errors, touchedFields, dirtyFields, isDirty } = formState;
 
-  console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
+//   console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
   
 
   const { fields, append, remove } = useFieldArray({
@@ -143,7 +143,13 @@ export default function YoutubeForm() {
 
         <div className='form-control'>
           <label htmlFor='twitter'>Twitter</label>
-          <input type='text' id='twitter' {...register('social.twitter')} />
+          <input type='text' id='twitter' {...register('social.twitter', {
+            // disabled: true,
+            disabled: watch("channel") === "",
+            // will be undefined when disabled and required will be turned off
+            required: "Twitter is required",
+          })} />
+          <p className='error'>{errors.social?.twitter?.message}</p>
         </div>
 
         <div className='form-control'>
