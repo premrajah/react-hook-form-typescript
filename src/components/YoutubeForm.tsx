@@ -38,7 +38,7 @@ export default function YoutubeForm() {
       dob: new Date(),
     },
   });
-  const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
   const {
     errors,
     touchedFields,
@@ -52,7 +52,6 @@ export default function YoutubeForm() {
   } = formState;
 
   //   console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
-  
 
   const { fields, append, remove } = useFieldArray({
     name: 'phNumbers',
@@ -71,6 +70,12 @@ export default function YoutubeForm() {
   //         subscription.unsubscribe();
   //     }
   // }, [watch])
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+        reset();
+    }
+  }, [reset, isSubmitSuccessful]);
 
   const handleOnSubmit = (data: FormValues) => {
     console.log('form submitted ', data);
@@ -244,8 +249,11 @@ export default function YoutubeForm() {
           <button style={{ marginRight: '10px' }} type='button' onClick={handleGetFormValues}>
             Get Values
           </button>
-          <button type='button' onClick={handleSetValue}>
+          <button style={{ marginRight: '10px' }} type='button' onClick={handleSetValue}>
             Set Value
+          </button>
+          <button type='button' onClick={() => reset()}>
+            Reset
           </button>
         </div>
       </form>
