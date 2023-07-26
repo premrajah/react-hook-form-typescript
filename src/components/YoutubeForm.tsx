@@ -39,10 +39,20 @@ export default function YoutubeForm() {
     },
   });
   const { register, control, handleSubmit, formState, watch, getValues, setValue } = form;
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitted,
+    isSubmitSuccessful,
+    submitCount,
+  } = formState;
 
   //   console.log("touched ", touchedFields.username, " dirty ", dirtyFields.username, " isDirty whole form ",  isDirty);
-  console.log('is from valid ', isValid);
+  
 
   const { fields, append, remove } = useFieldArray({
     name: 'phNumbers',
@@ -227,7 +237,7 @@ export default function YoutubeForm() {
         </div>
 
         <div style={{ marginBottom: '10px' }}>
-          <button disabled={!isDirty || !isValid}>Submit</button>
+          <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
         </div>
 
         <div>
