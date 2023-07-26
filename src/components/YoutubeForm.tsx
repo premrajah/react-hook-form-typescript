@@ -39,7 +39,7 @@ export default function YoutubeForm() {
     },
     mode: "onBlur"
   });
-  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset } = form;
+  const { register, control, handleSubmit, formState, watch, getValues, setValue, reset, trigger } = form;
   const {
     errors,
     touchedFields,
@@ -258,9 +258,10 @@ export default function YoutubeForm() {
           <button style={{ marginRight: '10px' }} type='button' onClick={handleSetValue}>
             Set Value
           </button>
-          <button type='button' onClick={() => reset()}>
+          <button style={{ marginRight: '10px' }} type='button' onClick={() => reset()}>
             Reset
           </button>
+          <button type="button" onClick={() => trigger()}>Validate</button>
         </div>
       </form>
       {/* end form */}
